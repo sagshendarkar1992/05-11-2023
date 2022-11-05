@@ -172,6 +172,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SqlExecController.cs" />
     <Compile Include="Controllers\TransactionController.cs" />
     <Compile Include="Controllers\UserMastController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1157,6 +1158,9 @@
     <Content Include="Views\UserMast\ADDUSERMAST.cshtml" />
     <Content Include="Views\Transaction\Index.cshtml" />
     <Content Include="Views\Shared\_LayoutTransaction.cshtml" />
+    <Content Include="Views\SqlExec\execsql.cshtml" />
+    <Content Include="Views\SqlExec\Import.cshtml" />
+    <Content Include="Views\SqlExec\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1172,6 +1176,14 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommonLib\CommonLib.csproj">
+      <Project>{e4b270d1-4699-4527-aede-85805dab086f}</Project>
+      <Name>CommonLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DataAccessBusiness\DataAccessBusiness.csproj">
+      <Project>{a509c4d6-9744-478d-b8fe-1ce8ef76d15d}</Project>
+      <Name>DataAccessBusiness</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ModelPortal\ModelPortal.csproj">
       <Project>{3bc96b32-fb92-4133-be2b-448aa9e75290}</Project>
       <Name>ModelPortal</Name>

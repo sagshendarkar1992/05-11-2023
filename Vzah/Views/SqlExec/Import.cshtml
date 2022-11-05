@@ -1,0 +1,59 @@
+﻿@{
+    ViewBag.Title = "Import";
+}
+
+<h2>Import</h2>
+@using (Html.BeginForm("Importexcel", "sqlexec", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <table>
+        <tr><td>Excel file</td><td><input type="file" id="FileUpload1" name="FileUpload1" /></td></tr>
+        <tr><td>Source Sheet</td><td> <input type="text" id="sourcesheet" name="txtsheet" value="[Sheet1$]" /></td></tr>
+        <tr><td>Destination Table</td><td> <input type="text" id="destitable" name="destitable" /></td></tr>
+        <tr><td></td><td><input type="submit" id="Submit" name="Submit" value="Submit" /></td></tr>
+    </table>
+}
+
+@if (ViewBag.ds != null)
+{
+    foreach (System.Data.DataTable tbl in ViewBag.ds.Tables)
+    {
+        <div class="space-8"></div>
+        <div class="table-responsive col-sm-12 col-xs-12">
+            <div style="position: relative; opacity: 1; left: 0px; top: 0px;" class="widget-box">
+                <div title="abc" data-placement="top" data-toggle="tooltip" class="widget-header">
+                    <h5>
+                        Total Records : @tbl.Rows.Count
+                    </h5>
+                    <div class="widget-toolbar">
+                        <a href="#" data-action="collapse">
+                            <i class="icon-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="widget-body">
+                    <div class="widget-main">
+                        <table class="table table-striped table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    @foreach (System.Data.DataColumn col in tbl.Columns)
+                                    {
+                                        <th>@col.ColumnName</th>}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (System.Data.DataRow row in tbl.Rows)
+                                {
+                                    <tr>
+                                        @foreach (System.Data.DataColumn col in tbl.Columns)
+                                        {
+                                            <td>@row[col.ColumnName]</td>}
+                                    </tr>}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+}   
