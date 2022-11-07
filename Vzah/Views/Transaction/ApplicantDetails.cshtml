@@ -1,0 +1,211 @@
+﻿@model ModelPortal.Transaction.Transaction
+@{
+    ViewBag.Title = "ApplicantDetails";
+    Layout = null;
+}
+<style>
+    .error {
+        color: red !important;
+    }
+</style>
+
+<form action="/Transaction/ApplicantDetails" class="form-horizontal" data-ajax="true" data-ajax-success="DisplaySuccessMsg" enctype="multipart/form-data" id="formApplicantDetails" method="post" novalidate="novalidate">
+    <div class="tab-content-wrapper">
+        <small>Step 1/5</small>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-4">
+                    <label>Applicant Name</label>
+                    @Html.HiddenFor(a => a.Trn_Id, new { @class = "form-control", @id = "Trn_Id" })
+                    @Html.TextBoxFor(a => a.ApplicantName, new { @class = "form-control  ApplicantArea", @id = "ApplicantName", @placeholder = "Enter Applicant Name" })
+                </div>
+                <div class="col-sm-4">
+                    <label>Age of applicant</label>
+                    @Html.TextBoxFor(a => a.ApplicantAge, new { @class = "form-control ApplicantArea", @id = "ApplicantAge", @placeholder = "Enter Applicant Age" })
+                </div>
+                <div class="col-sm-4">
+                    <label>Applicant Mobile Number</label>
+                    @Html.TextBoxFor(a => a.ApplicantMobileNumber, new { @class = "form-control ApplicantArea", @id = "ApplicantMobileNumber", @placeholder = "Enter Applicant Mobile Number" })
+                </div>
+            </div>
+        </div>
+        <hr />
+        <div class="row addhide">
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <label>Sub Applicant Name</label>
+                    @Html.TextBoxFor(a => a.SubApplicantName, new { @class = "form-control SubApplicantArea", @id = "SubApplicantName", @placeholder = "Enter Applicant Name" })
+
+                </div>
+                <div class="col-sm-3">
+                    <label>Age of Sub applicant</label>
+                    @Html.TextBoxFor(a => a.SubApplicantAge, new { @class = "form-control SubApplicantArea", @id = "SubApplicantAge", @placeholder = "Enter Applicant Age" })
+
+                </div>
+                <div class="col-sm-3">
+                    <label>Sub Applicant Mobile</label>
+                    @Html.TextBoxFor(a => a.SubApplicantMobileNumber, new { @class = "form-control SubApplicantArea", @id = "SubApplicantMobileNumber", @placeholder = "Enter Applicant Mobile Number" })
+
+                </div>
+                <div class="col-sm-3">
+                    <label>Relation</label>
+                    @Html.TextBoxFor(a => a.Relation, new { @class = "form-control SubApplicantArea", @id = "Relation", @placeholder = "Enter Relation" })
+
+                </div>
+            </div>
+            <!-- <div class="row">
+              <div class="col-12">
+                <div class="footer-btn">
+                <a href="#a-form"><button>Next Step</button></a>
+                </div>
+              </div>
+            </div> -->
+        </div>
+
+        <div class="row addhide">
+            <div class="form-group" style="margin: 10px 0">
+                <div class="col-sm-12 add-participent">
+                    <button class="btn-border-org" type="submit">
+                        <span class="glyphicon glyphicon-plus"></span> Add
+                    </button>
+                    <div class="add-participent-content">
+                        <p>Add Sub Applicant</p>
+                        <small>
+                            <span class="glyphicon glyphicon-info-sign"></span>Immediate Family Members max 5
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="table-responsive" style=" overflow: visible !important;">
+                    <table id="SubApplicantTable" class="table table-bordered" style="width:100%!important"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+    $(document).ready(function () {
+        if (@Model.Trn_Id>0) {
+            $(".ApplicantArea").prop("readonly", true);
+        }
+        BINDSUBAPPLICANTDETAILS(1, $("#Trn_Id").val(), "", "");
+    });
+    $("#formApplicantDetails").validate({
+        rules: {
+            ApplicantName: 'required',
+            ApplicantAge: 'required',
+            ApplicantMobileNumber: 'required',
+            SubApplicantName: 'required',
+            SubApplicantAge: 'required',
+            SubApplicantMobileNumber: 'required',
+            Relation: 'required',
+        },
+        messages: {
+            ApplicantName: 'Enter Applicant Name',
+            ApplicantAge: 'Enter Applicant Age',
+            ApplicantMobileNumber: 'Enter Applicant Mobile',
+            SubApplicantName: 'Enter SubApplicant Name',
+            SubApplicantAge: 'Enter SubApplicant Age',
+            SubApplicantMobileNumber: 'SubApplicant Mobile',
+            Relation: 'Select Relation',
+        },
+        errorPlacement: function (error, element) {
+            debugger
+            var placement = $(element).data('error');
+
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertAfter(element);
+            }
+        }
+    });
+    function BINDSUBAPPLICANTDETAILS(page, Trn_Id, FLAG, SEARCH) {
+
+        var oTable2 = $('#SubApplicantTable').dataTable({
+            "bFilter": false,
+            "bInfo": true,
+            "bSort": false,
+            "bPaginate": false,
+            "bDeferRender": true,
+            "bJQueryUI": false,
+            "sDom": '<"toolbar">frtip',
+            "sAjaxSource": "/Transaction/ViewSubApplicantDetails?Page=" + page + "&Flag=" + FLAG + "&Trn_Id=" + Trn_Id + "&SEARCH=" + SEARCH,
+            "fnInitComplete": function (oSettings, oData) {
+
+                if (oData.aaData.length < 5) {
+                    $(".addhide").show();
+                }
+                else {
+                    $(".addhide").hide();
+                }
+            },
+            "bDestroy": true,
+            "aoColumns": [
+                { "mData": "SubApplicantName", "sTitle": "Sub Applicant Name", "bSortable": false },
+                { "mData": "SubApplicantAge", "sTitle": "Sub Applicant Age", "bSortable": false },
+                { "mData": "SubApplicantMobileNumber", "sTitle": "Sub Applicant MobileNumber", "bSortable": false },
+                
+                { "mData": "Relation", "sTitle": "Relation", "bSortable": false },
+                { "mData": "Str_Action", "sTitle": "Delete", "bSortable": false },
+            ]
+        });
+
+        $(".dataTables_info").hide();
+    }
+    function onDeleteClick(SubApplicantDetails_Id) {
+        $.ajax({
+            url: '/Transaction/DeleteApplicantDetails',
+            data: { SubApplicantDetails_Id: SubApplicantDetails_Id },
+            success: function (aaData) {
+                DisplaySuccessMsg(aaData); 
+            },
+            error: function (xhr, textStatus, errorThrown) {
+            }
+        });
+
+    }
+    function DisplaySuccessMsg(aaData) {
+        if (parseInt(aaData.errorID) <= 0) {
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.error(aaData.errorMsg, 'Error');
+
+            }, 300);
+        }
+        else {
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.success(aaData.errorMsg, 'Success');
+
+            }, 300);
+            if (aaData.flag == "D") {
+                $(".ApplicantArea").prop("readonly", true);
+                $(".SubApplicantArea").val(''); 
+            }
+            else {
+                $("#Trn_Id").val(aaData.errorID);
+                $(".ApplicantArea").prop("readonly", true);
+                $(".SubApplicantArea").val('');
+                
+            }
+            BINDSUBAPPLICANTDETAILS(1, $("#Trn_Id").val(), "", "");
+
+        }
+    }
+
+
+</script>

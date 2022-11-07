@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Xml.Linq;
-using DataAccessPortal;
+
 using System.Data.SqlClient;
 using System.Configuration;
+using DataAccessPortal;
 
 namespace DataAccessBusinessPortal
 {
@@ -30,8 +31,15 @@ namespace DataAccessBusinessPortal
 
         public int StatusCheck(XDocument Xdoc)
         {
-            SqlHelper SqlObj = new SqlHelper();
-            return SqlObj.ExecuteScalar(Xdoc);
+            try
+            {
+                SqlHelper SqlObj = new SqlHelper();
+                return SqlObj.ExecuteScalar(Xdoc);
+            }
+            catch(Exception ex)
+            {
+                return 0;
+            }
 
         }
         

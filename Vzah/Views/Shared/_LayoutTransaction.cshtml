@@ -13,6 +13,15 @@
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="~/Areas/Content/bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <!-- Font Awesome -->
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+    <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+    @Styles.Render("~/plugins/toastrStyles")
+
+    @Scripts.Render("~/plugins/toastr")
+    @Scripts.Render("~/plugins/select2")
     <link rel="stylesheet" href="~/Areas/Content/bower_components/font-awesome/css/font-awesome.min.css" />
     <!-- Ionicons -->
     <link rel="stylesheet" href="~/Areas/Content/bower_components/Ionicons/css/ionicons.min.css" />
@@ -20,10 +29,13 @@
     <link rel="stylesheet" href="~/Areas/Content/dist/css/AdminLTE.min.css" />
     <link rel="stylesheet" href="~/Areas/Content/dist/css/skins/_all-skins.min.css" />
     <link rel="stylesheet" href="~/Areas/Content/dist/css/style.css" />
-
+    <script src="~/Scripts/jquery.twbsPagination.js"></script>
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+    @Scripts.Render("~/plugins/dataTables") 
     <!-- Google Font -->
     <link rel="stylesheet"
           href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
+
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
@@ -86,9 +98,8 @@
         <!-- Full Width Column -->
         @RenderBody()
     </div>
-    <!-- ./wrapper -->
-    <!-- jQuery 3 -->
-    <script src="~/Areas/Content/bower_components/jquery/dist/jquery.min.js"></script>
+   
+
     <!-- Bootstrap 3.3.7 -->
     <script src="~/Areas/Content/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
     <!-- SlimScroll -->
@@ -97,7 +108,6 @@
     <script src="~/Areas/Content/bower_components/fastclick/lib/fastclick.js"></script>
     <!-- AdminLTE App -->
     <script src="~/Areas/Content/dist/js/adminlte.min.js"></script>
-    <!-- AdminLTE for demo purposes -->
-    <script src="~/Areas/Content/dist/js/demo.js"></script>
+   
 </body>
 </html>

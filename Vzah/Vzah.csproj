@@ -1161,6 +1161,12 @@
     <Content Include="Views\SqlExec\execsql.cshtml" />
     <Content Include="Views\SqlExec\Import.cshtml" />
     <Content Include="Views\SqlExec\Index.cshtml" />
+    <Content Include="Views\Transaction\ApplicantDetails.cshtml" />
+    <Content Include="Views\Transaction\ApplicationForm.cshtml" />
+    <Content Include="Views\Transaction\DocumentPDF.cshtml" />
+    <Content Include="Views\Transaction\UploadDocument.cshtml" />
+    <Content Include="Views\Transaction\DocumentVerification.cshtml" />
+    <Content Include="Views\Transaction\DocumentConfirmation.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

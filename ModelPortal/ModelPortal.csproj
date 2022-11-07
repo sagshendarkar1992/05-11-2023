@@ -81,6 +81,7 @@
     <Compile Include="BI\BIErrors.cs" />
     <Compile Include="REGISTRATION\USERMAST.cs" />
     <Compile Include="SMSHelper.cs" />
+    <Compile Include="Transaction\Transaction.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataAccessBusiness\DataAccessBusiness.csproj">
