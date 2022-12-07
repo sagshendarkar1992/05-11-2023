@@ -10,6 +10,8 @@
     <title>Application Form</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
           name="viewport" />
+    <script src="~/Areas/Content/bower_components/jquery/dist/jquery.min.js"></script>
+
     <!-- Bootstrap 3.3.7 -->
     <link rel="stylesheet" href="~/Areas/Content/bower_components/bootstrap/dist/css/bootstrap.min.css" />
     <!-- Font Awesome -->
@@ -18,27 +20,30 @@
     <script src="~/Scripts/jquery.validate.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
     <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
-    @Styles.Render("~/plugins/toastrStyles")
 
-    @Scripts.Render("~/plugins/toastr")
-    @Scripts.Render("~/plugins/select2")
     <link rel="stylesheet" href="~/Areas/Content/bower_components/font-awesome/css/font-awesome.min.css" />
     <!-- Ionicons -->
     <link rel="stylesheet" href="~/Areas/Content/bower_components/Ionicons/css/ionicons.min.css" />
     <!-- Theme style -->
+    <link rel="stylesheet" href="~/Areas/Content/bower_components/select2/dist/css/select2.min.css">
+
     <link rel="stylesheet" href="~/Areas/Content/dist/css/AdminLTE.min.css" />
     <link rel="stylesheet" href="~/Areas/Content/dist/css/skins/_all-skins.min.css" />
     <link rel="stylesheet" href="~/Areas/Content/dist/css/style.css" />
-    <script src="~/Scripts/jquery.twbsPagination.js"></script>
-    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
-    @Scripts.Render("~/plugins/dataTables") 
-    <!-- Google Font -->
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic" />
-
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+    <script src="~/Areas/Content/bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+    <script src="~/Areas/Content/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="~/Areas/Content/bower_components/select2/dist/js/select2.full.min.js"></script>
+    @Styles.Render("~/plugins/toastrStyles")
+    @Scripts.Render("~/plugins/toastr")
 </head>
 <!-- ADD THE CLASS layout-top-nav TO REMOVE THE SIDEBAR. -->
 <body class="hold-transition skin-blue layout-top-nav">
+    <div id="hideshow" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+    top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+    opacity: .8; filter: alpha(opacity=70);display:none">
+        <p style="position: absolute; font-size: 20px; top: 30%; left: 34%; color: White;" id="loadtext"><i class="fa fa-circle-o-notch fa-2x fa-spin"></i> Please wait we are fetching data for you...</p>
+    </div>
     <div class="wrapper">
         <header class="main-header">
             <nav class="navbar navbar-static-top">
@@ -69,19 +74,20 @@
                                          alt="User Image" />
                                     <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                     <span class="hidden-xs">@SessLogObj.UserName.ToString()</span>
+                                    @*<span class="hidden-xs">Sagar Shendarkar</span>*@
                                 </a>
                                 <ul class="dropdown-menu">
                                     <!-- Menu Body -->
                                     <li class="user-body">
                                         <div class="row">
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Followers</a>
+                                            <div class="col-xs-6 text-center">
+                                                @using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                                {
+                                    @Html.AntiForgeryToken()
+                                                    <a class="logreg-cta" href="javascript:document.getElementById('logoutForm').submit()">Log Out</a>}
                                             </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Sales</a>
-                                            </div>
-                                            <div class="col-xs-4 text-center">
-                                                <a href="#">Friends</a>
+                                            <div class="col-xs-6 text-center">
+                                                <a href="/Home/Index">Go To HomePage</a>
                                             </div>
                                         </div>
                                         <!-- /.row -->
@@ -98,16 +104,8 @@
         <!-- Full Width Column -->
         @RenderBody()
     </div>
-   
 
-    <!-- Bootstrap 3.3.7 -->
-    <script src="~/Areas/Content/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-    <!-- SlimScroll -->
-    <script src="~/Areas/Content/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-    <!-- FastClick -->
-    <script src="~/Areas/Content/bower_components/fastclick/lib/fastclick.js"></script>
-    <!-- AdminLTE App -->
     <script src="~/Areas/Content/dist/js/adminlte.min.js"></script>
-   
+
 </body>
 </html>

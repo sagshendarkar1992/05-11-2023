@@ -11,11 +11,16 @@ using System.Web.Security;
 using Vzah.Models;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using System.IO;
+using System.Net.Mail;
+using System.Net;
+
 namespace Vzah.Controllers
 {
     //[Authorize]
     public class UserMastController : Controller
     {
+        SendEmail objmailsending = new SendEmail();
         USERMAST daccess = new USERMAST();
         LoginSessionDetails objSessLog = new LoginSessionDetails();
         MessageSending objMessageSending = new MessageSending();
@@ -234,8 +239,21 @@ namespace Vzah.Controllers
             DateTime OTPSendTime = DateTime.Now;
             TempData["VzahOTPSendTime"] = OTPSendTime;
             TempData.Keep("VzahOTPSendTime");
-            //daccess.SendMailOTPDetails(OTP, MOBILE_NUMBER, USERNAME, EMAIL_ADDRESS);
+            SendOTPEmail(MOBILE_NUMBER, USERNAME, EMAIL_ADDRESS, OTP);
             return Json(OTP, JsonRequestBehavior.AllowGet);
+        }
+        public string SendOTPEmail(string MOBILE_NUMBER, string USERNAME, string EMAIL_ADDRESS, string OTP)
+        {
+            EmailSendingMaster sendingdetails = new EmailSendingMaster();
+            EmailCredentials cred;
+            objmailsending.EmailSending("OTP", out cred, out sendingdetails);
+            StreamReader DocumentUpload = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/EmailTemplates/OTP.html"));
+            string Content = "";
+            Content = DocumentUpload.ReadToEnd();
+            Content = Content.Replace("#OTP", OTP);
+            sendingdetails.TO = EMAIL_ADDRESS;
+            objmailsending.SendEmailTemplate(sendingdetails, Content, cred.HOST, cred.FROM, Convert.ToInt32(cred.Port), cred.DeliveryMethod, cred.EnableSsl);
+            return "Success"; 
         }
         #region Verify OTP
 

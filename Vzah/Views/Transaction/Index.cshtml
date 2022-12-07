@@ -4,12 +4,26 @@
 }
 
 <style>
-   /* .lidisabled {
+    /* .lidisabled {
         pointer-events: none;
     }*/
+    .truncate {
+        width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
 </style>
 <div class="content-wrapper">
+
     <div class="container">
+        <section class="top-applicant-details">
+            <div class="d-flex justify-between" style="margin-bottom: 20px;">
+                <h2>Applicant Details</h2>
+                <p style="cursor: pointer;">Edit Info <span class="glyphicon glyphicon-pencil"></span></p>
+            </div>
+            <div class="loadtopdetails" id="loadtopdetails"></div>
+        </section>
         <!-- Content Header (Page header) -->
         <section class="content-header">
             <h1>Application from</h1>
@@ -21,87 +35,6 @@
                     <!-- required for floating -->
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs tabs-left sideways">
-                        <li class="active" id="panel1">
-                            <a href="#a-detail" data-toggle="tab">
-                                <div class="tab-align">
-                                    <div class="tab-heading-content">
-                                        <p>Applicant Details</p>
-                                        <small>Lorem ipsume is simply dymmy</small>
-                                    </div>
-                                    <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li id="panel2" class="lidisabled">
-                            <a href="#a-form" data-toggle="tab">
-                                <div class="tab-align">
-                                    <div class="tab-heading-content">
-                                        <p>Application Form</p>
-                                        <small>Lorem ipsume is simply dymmy</small>
-                                    </div>
-                                    <span class="
-                            glyphicon glyphicon-envelope
-                            form-control-feedback
-                          "></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li id="panel3" class="lidisabled">
-                            <a href="#a-pdf" data-toggle="tab">
-                                <div class="tab-align">
-                                    <div class="tab-heading-content">
-                                        <p>Document PDF</p>
-                                        <small>Lorem ipsume is simply dymmy</small>
-                                    </div>
-                                    <span class="
-                            glyphicon glyphicon-envelope
-                            form-control-feedback
-                          "></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li id="panel4" class="lidisabled">
-                            <a href="#a-upload-doc" data-toggle="tab">
-                                <div class="tab-align">
-                                    <div class="tab-heading-content">
-                                        <p>Upload Document </p>
-                                        <small>Lorem ipsume is simply dymmy</small>
-                                    </div>
-                                    <span class="
-                            glyphicon glyphicon-envelope
-                            form-control-feedback
-                          "></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li id="panel5" class="lidisabled">
-                            <a href="#a-verification" data-toggle="tab">
-                                <div class="tab-align">
-                                    <div class="tab-heading-content">
-                                        <p>Verification</p>
-                                        <small>Lorem ipsume is simply dymmy</small>
-                                    </div>
-                                    <span class="
-                            glyphicon glyphicon-envelope
-                            form-control-feedback
-                          "></span>
-                                </div>
-                            </a>
-                        </li>
-                        <li id="panel6" class="lidisabled">
-                            <a href="#a-confirmation" data-toggle="tab">
-                                <div class="tab-align">
-                                    <div class="tab-heading-content">
-                                        <p>Confirmation</p>
-                                        <small>Lorem ipsume is simply dymmy</small>
-                                    </div>
-                                    <span class="
-                            glyphicon glyphicon-envelope
-                            form-control-feedback
-                          "></span>
-                                </div>
-                            </a>
-                        </li>
                     </ul>
                 </div>
 
@@ -112,17 +45,19 @@
                             @Html.Action("ApplicantDetails", "Transaction")
                         </div>
                         <div class="tab-pane" id="a-form">
-                            @Html.Action("ApplicationForm", "Transaction")
+                            <div class="loadtraveldetails" id="loadtraveldetails"></div>
                         </div>
                         <div class="tab-pane" id="a-pdf">a-pdf Tab.</div>
                         <div class="tab-pane" id="a-upload-doc">
-                            @Html.Action("UploadDocument", "Transaction")
+                            <div class="loaddocumentdetails" id="loaddocumentdetails"></div>
                         </div>
                         <div class="tab-pane" id="a-verification">
-                            @Html.Action("DocumentVerification", "Transaction")
+                            <div class="loaddocumentVerification" style="overflow: scroll;" id="loaddocumentVerification"></div>
+
                         </div>
                         <div class="tab-pane" id="a-confirmation">
-                            @Html.Action("DocumentConfirmation", "Transaction")
+                            <div class="loaddocumentConfirmation" id="loaddocumentConfirmation"></div>
+
                         </div>
                     </div>
                 </div>
@@ -132,3 +67,230 @@
     </div>
     <!-- /.container -->
 </div>
+<script>
+    LoadSideMenu(); GetTopBarDetails();
+    function LoadSideMenu() {
+        $.ajax({
+            url: '/Transaction/SideBar',
+            data: {
+                Trn_Id: $("#Trn_Id").val(),
+            },
+            success: function (aaData) {
+                $(".sideways").html(aaData);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+            }
+        });
+    }
+    function GetSidebarStatus(flag, callback) {
+        //alert(flag);
+        var data;
+        $.ajax({
+            url: '/Transaction/GetSideBarStatus',
+            data: {
+                Trn_Id: $("#Trn_Id").val(),
+            },
+            success: function (aaData) {
+                $.each(aaData, function (i, item) {
+                    if (flag == "IsApplicantDetails") {
+                        if (item.IsApplicantDetails == false) {
+                            data = false; callback(data);
+                        }
+                        else {
+                            data = true; callback(data);
+                        }
+                    }
+                    else if (flag == "IsTravelDetails") {
+                        if (item.IsTravelDetails == false) {
+                            data = false; callback(data);
+                        }
+                        else if (item.IsTravelDetails == true) {
+                            data = true; callback(data);
+                        }
+                    }
+                    else if (flag == "IsUploadDocuments") {
+                        if (item.IsTravelDetails == false) {
+                            data = false; callback(data);
+                        }
+                        else if (item.IsTravelDetails == true) {
+                            data = true; callback(data);
+                        }
+                    }
+                    else if (flag == "IsUploadVerified") {
+                        if (item.Doc_CompletedCount != item.Doc_MasterCount) {
+                            data = false; callback(data);
+                        }
+                        else if (item.IsTravelDetails == true) {
+                            data = true; callback(data);
+                        }
+                    }
+
+
+
+                });
+            },
+            error: function (xhr, textStatus, errorThrown) {
+            }
+        });
+        return data;
+    }
+    function LoadTravelDetails() {
+
+        GetSidebarStatus("IsApplicantDetails", function (_status) {
+            if (_status == true) {
+                $.ajax({
+                    url: '/Transaction/ApplicationForm',
+                    data: {
+                        Trn_Id: $("#Trn_Id").val(),
+                    },
+                    success: function (aaData) {
+                        $("#loadtraveldetails").html(aaData);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                    }
+                });
+            }
+            else {
+
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 4000
+                    };
+                    toastr.error("Please fill Applicant Data first", 'Intervention Required');
+
+                }, 300);
+                $("#panel2").removeClass('active');
+                $("#panel1").addClass('active');
+
+                $("#a-form").removeClass('active');
+                $("#a-detail").addClass('active');
+
+            }
+        });
+
+    }
+    function LoadDocumentDetails() {
+        
+        GetSidebarStatus("IsTravelDetails", function (_status) {
+            
+            if (_status == true) {
+               
+                $.ajax({
+                    url: '/Transaction/UploadDocument',
+                    data: {
+                        Trn_Id: $("#Trn_Id").val(),
+                    },
+                    success: function (aaData) {
+                        $("#loaddocumentdetails").html(aaData);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                    }
+                });
+            }
+            else {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 4000
+                    };
+                    toastr.error("Please fill Applicant/Travel Details Data first", 'Intervention Required');
+
+                }, 300);
+                $("#panel4").removeClass('active');
+                $("#panel1").addClass('active');
+
+                $("#a-upload-doc").removeClass('active');
+                $("#a-detail").addClass('active');
+            }
+        });
+
+    }
+    function LoadDocumentVerification() {
+        GetSidebarStatus("IsUploadDocuments", function (_status) {
+            if (_status == true) {
+                $.ajax({
+                    url: '/Transaction/DocumentVerification',
+                    data: {
+                        Trn_Id: $("#Trn_Id").val(),
+                    },
+                    success: function (aaData) {
+                        $("#loaddocumentVerification").html(aaData);
+
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                    }
+                });
+            }
+            else {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 4000
+                    };
+                    toastr.error("Please fill Document Upload first", 'Intervention Required');
+
+                }, 300);
+                $("#panel5").removeClass('active');
+                $("#panel1").addClass('active');
+
+                $("#a-verification").removeClass('active');
+                $("#a-detail").addClass('active');
+            }
+        });
+
+
+    }
+    function LoadDocumentConfirmation() {
+        GetSidebarStatus("IsUploadVerified", function (_status) {
+            if (_status == true) {
+                $.ajax({
+                    url: '/Transaction/DocumentConfirmation',
+                    data: {
+                        Trn_Id: $("#Trn_Id").val(),
+                    },
+                    success: function (aaData) {
+                        $("#loaddocumentConfirmation").html(aaData);
+                        $(".paymentrow").show();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                    }
+                });
+            }
+            else {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 4000
+                    };
+                    toastr.error("Your Uploaded Documents has not been approved yet", 'Intervention Required');
+
+                }, 300);
+                
+               
+            }
+        });
+        
+    }
+    function GetTopBarDetails() {
+        $.ajax({
+            url: '/Transaction/TopApplicantDetails',
+            data: {
+                Trn_Id: $("#Trn_Id").val(),
+            },
+            success: function (aaData) {
+                $("#loadtopdetails").html(aaData);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+            }
+        });
+    }
+</script>

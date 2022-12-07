@@ -1,0 +1,403 @@
+﻿@model ModelPortal.Transaction.InitialLoad
+@{
+    ViewBag.Title = "InitialLoad";
+    Layout = "~/Views/Shared/_LayoutTransaction.cshtml";
+}
+<style>
+    .error {
+        color: red !important;
+    }
+</style>
+@if (Model.Trn_Id == 0)
+{
+    <form action="/Transaction/InitialLoad" class="form-horizontal" data-ajax="true" data-ajax-success="DisplaySuccessMsg1" enctype="multipart/form-data" id="formApplicationform" method="post" novalidate="novalidate">
+
+        <div class="login-bg">
+            <div class="container login-wrapper p-0">
+                <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                        <div class="login-logo">
+                            <a href="#">
+                                <img src="~/Areas/Content/dist/img/logo.png">
+                            </a>
+                        </div>
+                        <!-- /.login-logo -->
+                        <div style="height: 500px;display: flex;">
+                            <div class="form-container">
+                                <div class="login-box-body" style="margin-bottom: 90px;">
+                                    <h1>Lorem Ipsum</h1>
+                                    <div class="row" style="margin-bottom: 20px;">
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label>Travelling From</label>
+                                                <select id="TravellingFrom" name="TravellingFrom" class="form-control"></select>
+                                                <input id="TravellingFromName" value="@Model.TravellingFrom" type="hidden" hidden name="TravellingFromName" class="form-control" />
+
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>Travelling to</label>
+                                                <select id="TravellingTo" name="TravellingTo" class="form-control"></select>
+                                                <input id="TravellingToName" value="@Model.TravellingTo" type="hidden" hidden name="TravellingToName" class="form-control" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 20px;">
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label>Passport Holding Country</label>
+                                                <select id="PassportHoldingCountry" name="PassportHoldingCountry" class="form-control"></select>
+                                                <input id="PassportHoldingCountryName" value="@Model.PassportHoldingCountry" type="hidden" hidden name="PassportHoldingCountryName" class="form-control" />
+
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>Purpose Of Travel</label>
+                                                <select id="PurposeOfTravelId" name="PurposeOfTravelId" class="form-control"></select>
+                                                <input id="PurposeOfTravel" value="@Model.PurposeOfTravelId" type="hidden" hidden name="PurposeOfTravel" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 20px;">
+                                        <div class="form-group">
+                                            <div class="col-sm-6">
+                                                <label>Number of Days</label>
+                                                <select value="@Model.NumberOfDays" class="form-control" id="NumberofDays" name="NumberofDays">
+                                                    <option value="0">Select</option>
+                                                    <option value="29">29 Days</option>
+                                                    <option value="90">90 Days</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <label>Date Of Travel</label>
+                                                <input type="date" value="@Convert.ToDateTime(@Model.DateOfTravel).ToShortDateString()" class="form-control" name="DateOfTravel" id="DateOfTravel" placeholder="Enter Age" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" style="margin-bottom: 20px;">
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <label>Entry Requirements</label>
+                                                <select id="EntryId" name="EntryId" class="form-control"></select>
+                                                <input id="EntryName" value="@Model.EntryId" type="hidden" hidden name="EntryName" class="form-control" />
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <!-- /.col -->
+                                        <div class="col-xs-12 text-center" style="margin-top: 2rem;">
+                                            <button type="submit" class="btn-primary-org">Proceed</button>
+                                        </div>
+                                        <!-- /.col -->
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+}
+else
+{
+
+    <div class="login-bg">
+        <div class="container login-wrapper p-0">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="login-logo">
+                        <a href="#">
+                            <img src="~/Areas/Content/dist/img/logo.png">
+                        </a>
+                    </div>
+                    <!-- /.login-logo -->
+                    <div style="height: 500px;display: flex;">
+                        <div class="form-container">
+                            <div class="login-box-body" style="margin-bottom: 90px;">
+                                <h1>Lorem Ipsum</h1>
+                                <table class="table table-striped table-bordered table-hover dataTables-example dataTable no-footer">
+                                    <thead>
+                                        <tr>
+                                            <th>Travelling From</th>
+                                            <th>Travelling To</th>
+                                            <th>Passport Holding Country</th>
+                                            <th>Purpose Of Travel</th>
+                                            <th>Number of Days</th>
+                                            <th>Date Of Travel</th>
+                                            <th>Entry Requirements</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>@Model.TravellingToName</td>
+                                            <td>@Model.TravellingToName</td>
+                                            <td>@Model.PassportHoldingCountry</td>
+                                            <td>@Model.PurposeOfTravel</td>
+                                            <td>@Model.NumberOfDays</td>
+                                            <td>@Model.DateOfTravel</td>
+                                            <td>@Model.EntryName</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <div class="row">
+                                    <!-- /.col -->
+                                    <div class="col-xs-12 text-center" style="margin-top: 2rem;">
+                                        <button type="button" id="btnproceed" class="btn-primary-org">Proceed</button>
+                                    </div>
+                                    <!-- /.col -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $("#hideshow").show();
+    $("#Trn_IdTravel").val($("#Trn_Id").val());
+    FillCountry1(); FillCountry2(); FillCountry3(); FillEntry(); FillPurposeOfTravel();
+    function FillPurposeOfTravel() {
+        $('#PurposeOfTravelId').select2({
+            placeholder: "--Select PurposeOfTravel--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetPurposeOfTravel/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#PurposeOfTravel').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetPurposeOfTravel/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#PurposeOfTravel").val($("#PurposeOfTravelId").val());
+        });
+    }
+    function FillCountry1() {
+        $('#TravellingFrom').select2({
+            placeholder: "--Select Travelling From--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetCountry/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#TravellingFromName').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetCountry/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: ""
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#TravellingFromName").val($("#TravellingFrom").val());
+        });
+    }
+    function FillCountry2() {
+        $('#TravellingTo').select2({
+            placeholder: "--Select Travelling To--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetCountry/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#TravellingToName').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetCountry/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: ""
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#TravellingToName").val($("#TravellingTo").val());
+        });
+    }
+    function FillCountry3() {
+        $('#PassportHoldingCountry').select2({
+            placeholder: "--Select Passport Holding Country--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetCountry/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#PassportHoldingCountryName').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetCountry/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: ""
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#PassportHoldingCountryName").val($("#PassportHoldingCountry").val());
+        });
+    }
+
+    function FillEntry() {
+        $('#EntryId').select2({
+            placeholder: "--Select Entry--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetEntry/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#EntryName').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetEntry/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#EntryName").val($("#EntryId").val());
+        });
+    }
+
+    function DisplaySuccessMsg1(aaData) {
+        if (parseInt(aaData.errorID) <= 0) {
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.error(aaData.errorMsg, 'Error');
+
+            }, 300);
+        }
+        else {
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.success(aaData.errorMsg, 'Success');
+                window.location.href = "/Transaction/Index?Id=" + aaData.errorID;
+            }, 300);
+
+        }
+    }
+    $("#formApplicationform").validate({
+        rules: {
+            TravellingFrom: 'required',
+            TravellingTo: 'required',
+            PassportHoldingCountry: 'required',
+            PurposeOfTravelId: 'required',
+            NumberofDays: 'required',
+            DateOfTravel: 'required',
+            EntryId: 'required',
+        },
+        messages: {
+            TravellingFrom: 'Select Travelling From',
+            TravellingTo: 'Select Travelling To',
+            PassportHoldingCountry: 'Select PassportHoldingCountry',
+            PurposeOfTravelId: 'Select PurposeOfTravel',
+            NumberofDays: 'Select Number of Days',
+            DateOfTravel: 'Enter DateOfTravel',
+            EntryId: 'Select Entry',
+        },
+        errorPlacement: function (error, element) {
+            debugger
+            var placement = $(element).data('error');
+
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertBefore(element);
+            }
+        }
+    });
+    $("#hideshow").hide();
+    $("#btnproceed").click(function () {
+
+        window.location.href = "/Transaction/Index?Trn_Id=" +@Model.Trn_Id  });
+</script>

@@ -1,80 +1,72 @@
-﻿
+﻿@model IEnumerable<ModelPortal.Transaction.DocumentDetails>
 @{
     ViewBag.Title = "DocumentVerification";
     Layout = null;
 }
 <div class="tab-content-wrapper">
     <small>Step 5/5</small>
-    <div class="verification-card">
-        <span class="glyphicon glyphicon-file"></span>
-        <p>Document1</p>
-        <p>12 Nov 2021, 11:02 AM</p>
-        <p><span class="badge bg-yellow">Pending</span></p>
-        <div class="progress progress-xs">
-            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                <span class="sr-only">60% Complete (warning)</span>
+    @foreach (var item in Model)
+    {
+        <div class="verification-card">
+            <span class="glyphicon glyphicon-file"></span>
+            <p class="truncate">@item.Document_Name</p>
+            <p>@item.CreatedDate</p>
+            <p><span class="badge bg-green">@item.Approved_Status</span></p>
+            <div class="progress progress-xs">
+                @if (@item.Approved_Status == "Completed")
+                {
+                    <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 100%">
+                        <span class="sr-only">100% Complete (warning)</span>
+                    </div>
+                }
+                else
+                {
+                    <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                        <span class="sr-only">60% Complete (warning)</span>
+                    </div>
+                }
+            </div>
+            <a href="~/UploadedImages/DocumentUpload/@item.Path" target="_blank">
+                @if (item.FileExtension == ".docx")
+                {
+                    <img src="~/Areas/Content/dist/img/word.png" style="width: 89px; height: 49px; " />
+
+                }
+                else if (item.FileExtension == ".xlsx")
+                {
+                    <img src="~/Areas/Content/dist/img/word.png" style="width: 89px; height: 49px; " />
+
+                }
+                else
+                {
+                    <img src="~/UploadedImages/DocumentUpload/@item.Path" style="width: 89px; height: 49px; " />
+                }
+            </a>
+            <button class="verification-btn" onclick="OpenModalPopup(@item.Trn_IdDoc,@item.Doc_Id)"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
+        </div>
+    }
+</div>
+
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Uploaded Document</h4>
+            </div>
+            <div class="modal-body">
+                <p>Some text in the modal.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div>
         </div>
-        <button class="verification-btn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
-    </div>
-    <div class="verification-card">
-        <span class="glyphicon glyphicon-file"></span>
-        <p>Document1</p>
-        <p>12 Nov 2021, 11:02 AM</p>
-        <p><span class="badge bg-green">Success</span></p>
-        <div class="progress progress-xs">
-            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                <span class="sr-only">60% Complete (warning)</span>
-            </div>
-        </div>
-        <button class="verification-btn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
-    </div>
-    <div class="verification-card">
-        <span class="glyphicon glyphicon-file"></span>
-        <p>Document1</p>
-        <p>12 Nov 2021, 11:02 AM</p>
-        <p><span class="badge bg-light-blue">Pending</span></p>
-        <div class="progress progress-xs">
-            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                <span class="sr-only">60% Complete (warning)</span>
-            </div>
-        </div>
-        <button class="verification-btn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
-    </div>
-    <div class="verification-card">
-        <span class="glyphicon glyphicon-file"></span>
-        <p>Document1</p>
-        <p>12 Nov 2021, 11:02 AM</p>
-        <p><span class="badge bg-red">Pending</span></p>
-        <div class="progress progress-xs">
-            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                <span class="sr-only">60% Complete (warning)</span>
-            </div>
-        </div>
-        <button class="verification-btn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
-    </div>
-    <div class="verification-card">
-        <span class="glyphicon glyphicon-file"></span>
-        <p>Document1</p>
-        <p>12 Nov 2021, 11:02 AM</p>
-        <p><span class="badge bg-yellow">Pending</span></p>
-        <div class="progress progress-xs">
-            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                <span class="sr-only">60% Complete (warning)</span>
-            </div>
-        </div>
-        <button class="verification-btn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
-    </div>
-    <div class="verification-card">
-        <span class="glyphicon glyphicon-file"></span>
-        <p>Document1</p>
-        <p>12 Nov 2021, 11:02 AM</p>
-        <p><span class="badge bg-yellow">Pending</span></p>
-        <div class="progress progress-xs">
-            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                <span class="sr-only">60% Complete (warning)</span>
-            </div>
-        </div>
-        <button class="verification-btn"><span class="glyphicon glyphicon-pencil"></span> Edit</button>
     </div>
 </div>
+<script>
+    function OpenModalPopup(Trn_IdDoc, Doc_Id) {
+        $('#myModal').show();
+    }
+</script>

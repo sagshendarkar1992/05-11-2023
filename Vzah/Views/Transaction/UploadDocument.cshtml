@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<ModelPortal.Transaction.DocumentDetails>
 @{
     ViewBag.Title = "UploadDocument";
     Layout = null;
@@ -11,118 +11,139 @@
             Note - Every document should have atleast 1mb.
         </small>
     </div>
-    <div class="row m-3">
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-org">
-                        Upload
-                    </button>
+
+    <div class="row">
+
+        @{ int rownum = 0;}
+        @foreach (var item in Model.Where(a => a.Doc_Status == "Master"))
+        {
+            <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <div class="info-box-content">
+                        <p class="truncate">
+                            <input type="hidden" id="Trn_IdDoc_@rownum" name="Doc[@rownum].Trn_IdDoc" value="@item.Trn_IdDoc" class="form-Control" />
+
+                            <input type="hidden" id="Doc_Id_@rownum" name="Doc[@rownum].Doc_Id" value="@item.Doc_Id" class="form-Control" />
+                            <span title="@item.Document_Name" class="glyphicon glyphicon-info-sign"></span> @item.Document_Name
+
+                        </p>
+
+                        @if (item.Doc_Status == "Master")
+                        {
+                            <input style="width: 247px;" type="file" name="files" class="btn-border-org" id="files_@rownum">
+                        }
+                        else
+                        {
+                            @*<input style="width: 247px;" readonly type="file" name="files" class="btn-border-org" id="files_@rownum">*@
+
+                            <a href="~/UploadedImages/DocumentUpload/@item.Path" target="_blank">
+                                <img src="~/UploadedImages/DocumentUpload/@item.Path" style="width: 89px; height: 49px; " />
+                            </a>
+                        }
+                    </div>
+
                 </div>
+
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-org">
-                        Upload
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-org">
-                        Upload
-                    </button>
-                </div>
-            </div>
-        </div>
+
+            rownum++;
+        }
+        <input type="hidden" name="DocumentCount" id="DocumentCount" value="@Model.Where(a => a.Doc_Status == "Master").Count()" class="form-Control" />
+
     </div>
-    <div class="row m-3">
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-org">
-                        Upload
+    @if (@Model.Where(a => a.Doc_Status == "Master").Count() > 0)
+    {
+        <div class="row">
+            <div class="form-group" style="margin: 10px 0">
+                <div class="col-sm-12 add-participent">
+                    <button class="btn-border-org" type="button" id="btnUpload">
+                        <span class="glyphicon glyphicon-plus"></span> Save Details
                     </button>
+
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
+    }
+    else
+    {
+        <div class="row" style=" font-size: 16px;">
+            <div class="form-group" style="margin: 10px 0">
+                <div class="col-sm-12 add-participent">
                     <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
+                        At Verification Process <br /> Your Document has been processed for verification with our Admin .Now your case is under Final Document Validation. You will get notification soft copy on your given email in next 3-4 days.
+                        In case of any query, you can communicate to <a href="vzah.helpdesk@vzah.com">vzah.Admin@vzah.com</a>
                     </p>
-                    <button class="btn-border-org">
-                        Upload
-                    </button>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-org">
-                        Upload
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row m-3">
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-org">
-                        Upload
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-org">
-                        Upload
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-org">
-                        Upload
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
+    }
 </div>
+<script>
+    $(document).ready(function () {
+        $('#btnUpload').click(function () {
+         
+            for (var j = 0; j <= $("#DocumentCount").val(); j++) {
+                // Checking whether FormData is available in browser
+                if (window.FormData !== undefined) {
+
+                    var fileUpload = $("#files_" + j).get(0);
+                    var files = fileUpload.files;
+
+                    // Create FormData object
+                    var fileData = new FormData();
+
+                    // Looping over all files and add it to FormData object
+                    for (var i = 0; i < files.length; i++) {
+
+                        fileData.append(files[i].name, files[i]);
+
+                        // Adding one more key to FormData object
+                        fileData.append('Doc_Id', $("#Doc_Id_" + j).val());
+                        fileData.append('Trn_IdDoc', $("#Trn_IdDoc_" + j).val());
+                        $.ajax({
+                            url: '/Transaction/UploadFiles',
+                            type: "POST",
+                            contentType: false, // Not to set any content header
+                            processData: false, // Not to process data
+                            data: fileData,
+                            success: function (aaData) {
+                                if (aaData.flag != "D") {
+                                    setTimeout(function () {
+                                        toastr.options = {
+                                            closeButton: true,
+                                            progressBar: true,
+                                            showMethod: 'slideDown',
+                                            timeOut: 4000
+                                        };
+                                        toastr.success(aaData.errorMsg, 'Success');
+
+                                    }, 300);
+                                }
+                                LoadDocumentDetails();
+
+                            },
+                            error: function (err) {
+                                setTimeout(function () {
+                                    toastr.options = {
+                                        closeButton: true,
+                                        progressBar: true,
+                                        showMethod: 'slideDown',
+                                        timeOut: 4000
+                                    };
+                                    toastr.success(err.statusText, 'Success');
+
+                                }, 300);
+                            }
+                        });
+                    }
+
+
+                } else {
+                    /*alert("FormData is not supported.");*/
+                }
+            }
+         
+            
+        });
+    });
+</script>

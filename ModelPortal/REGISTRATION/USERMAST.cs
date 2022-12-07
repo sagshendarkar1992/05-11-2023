@@ -119,7 +119,7 @@ namespace ModelPortal
             DataTable dt = objbui.GetCloud9BusinessList(xdoc);
             var dbResult = (from s in dt.AsEnumerable()
                             select new USERMAST
-                            {
+                            { 
                                 REGISTRATION_ID = s.Field<int>("USERID"),
                                 USERNAME = s.Field<string>("UserName"),
                                 USER_PASSWORD = s.Field<string>("UsrPassword"),
@@ -178,14 +178,14 @@ namespace ModelPortal
 
         #region Send OTP on mail to Regiter User
 
-        public void SendMailOTPDetails(string OTP, string Mobile, string USERNAME, string ToEmail)
+        public void SendMailOTPDetails(string OTP,DateTime OTPSendTime, string Mobile, string USERNAME, string ToEmail)
         {
-         
-            StreamReader FileReader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/MailTemplates/OTP_Agent.html"));
+            string userName = System.Configuration.ConfigurationManager.AppSettings["EmailIDVzah"];
+            string password = System.Configuration.ConfigurationManager.AppSettings["PasswordVzah"];
+            StreamReader FileReader = new StreamReader(System.Web.HttpContext.Current.Server.MapPath("~/EmailTemplates/OTP.html"));
             string BodyContent = FileReader.ReadToEnd();
             BodyContent = BodyContent.Replace("#OTP", OTP);
-            BodyContent = BodyContent.Replace("#CustomerName", USERNAME);
-            BodyContent = BodyContent.Replace("#Mobile", Mobile);
+            BodyContent = BodyContent.Replace("#OTPSendTime", OTPSendTime.ToString()); 
             FileReader.Close();
             FileReader.Dispose();
             string Subject = "Vzah OTP Details of " + USERNAME; 

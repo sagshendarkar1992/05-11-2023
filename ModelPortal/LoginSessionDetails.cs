@@ -8,6 +8,7 @@ namespace ModelPortal
 {
     public struct LoginSessionDetails
     {
+        public string EMAIL_ADDRESS;
         public int RoleId;
         public string Roles;
         public int UserId;

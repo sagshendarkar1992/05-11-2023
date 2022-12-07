@@ -13,6 +13,7 @@ using Vzah.Models;
 
 namespace Vzah.Controllers
 {
+    [SkipMyGlobalActionFilterAttribute]
     [Authorize]
     public class AccountController : Controller
     {
@@ -465,7 +466,7 @@ namespace Vzah.Controllers
             }
             else if (obj.USER_TYPE == "End User" && obj != null)
             {
-                return RedirectToAction("Index", "Transaction");
+                return RedirectToAction("InitialLoad", "Transaction");
             }
             else
             {

@@ -11,117 +11,102 @@
         </small>
     </div>
     <div class="row m-3">
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
+        @{ int rownum = 0;}
+        @foreach (var item in Model)
+        {
+            <div class="col-sm-4">
+                <div class="card">
+                    <div>
+                        <p class="truncate">
+                            @item.Document_Name <span class="glyphicon glyphicon-info-sign"></span>
+                        </p>
+                        <a href="~/UploadedImages/DocumentUpload/@item.Path" target="_blank">
+                            <img src="~/UploadedImages/DocumentUpload/@item.Path" style="width: 89px; height: 49px; " />
+                        </a><br />
+                        <button class="btn-border-green">
+                            <span class="glyphicon glyphicon-check"></span> Verified
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
-                </div>
-            </div>
-        </div>
+        }
     </div>
-    <div class="row m-3">
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
-                </div>
+
+
+    <div class="row paymentrow" style="display:none;">
+
+        <div class="col-xs-6">
+            <p class="lead">Payment Methods:</p>
+            <p class="text-muted well well-sm no-shadow" style="margin-top: 10px;">
+                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg
+                dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra.
+            </p>
+        </div>
+
+        <div class="col-xs-6">
+            <p class="lead">Amount Due @DateTime.Now</p>
+            <div class="table-responsive">
+                <table class="table">
+                    <tbody>
+                        <tr>
+                            <th style="width:50%">Subtotal:</th>
+                            <td>2200.00</td>
+                        </tr>
+                        <tr>
+                            <th>CGST (18.00%)</th>
+                            <td>396.00</td>
+                        </tr>
+                        <tr>
+                            <th>SGST (18.00%)</th>
+                            <td>396.00</td>
+                        </tr>
+                        <tr>
+                            <th>Other Charges:</th>
+                            <td>100</td>
+                        </tr>
+                        <tr>
+                            <th>Total:</th>
+                            <td>3092.00</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
-                </div>
-            </div>
-        </div>
+
     </div>
-    <div class="row m-3">
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <div>
-                    <p>
-                        Document <span class="glyphicon glyphicon-info-sign"></span>
-                    </p>
-                    <button class="btn-border-green">
-                        <span class="glyphicon glyphicon-check"></span> Verified
-                    </button>
-                </div>
+    <div class="row paymentrow" style="display:none;">
+        <div class="form-group" style="margin: 10px 0">
+            <div class="col-sm-12 add-participent">
+                <a target="_blank" href="#" class="btn-border-org" type="button" id="btnUpload">
+                    <span class="fa fa-payment"></span>Proceed To Payment
+                </a>
+
             </div>
         </div>
     </div>
 </div>
+<script>
+    $("#btnUpload").click(function () {
+      
+        $.ajax({
+            url: '/Transaction/Payment',
+            data: {
+                Trn_Id: $("#Trn_Id").val(),
+            },
+            success: function (aaData) {
+                setTimeout(function () {
+                    toastr.options = {
+                        closeButton: true,
+                        progressBar: true,
+                        showMethod: 'slideDown',
+                        timeOut: 4000
+                    };
+                    toastr.success("Payment is Completed", 'Payment Recieved');
+
+                }, 300);
+            },
+            error: function (xhr, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>

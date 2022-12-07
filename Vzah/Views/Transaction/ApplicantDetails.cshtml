@@ -98,7 +98,21 @@
             ApplicantName: 'required',
             ApplicantAge: 'required',
             ApplicantMobileNumber: 'required',
-            SubApplicantName: 'required',
+            SubApplicantName: {
+                required: true,
+                remote: {
+                    url: "/Transaction/CHECKIFDATAEXIST",
+                    type: "post",
+                    data: {
+                        SubApplicantName: function () {
+                            return $("#SubApplicantName").val();
+                        },
+                        Trn_Id: function () {
+                            return $("#Trn_Id").val();
+                        }
+                    }
+                }
+            },
             SubApplicantAge: 'required',
             SubApplicantMobileNumber: 'required',
             Relation: 'required',
@@ -107,7 +121,10 @@
             ApplicantName: 'Enter Applicant Name',
             ApplicantAge: 'Enter Applicant Age',
             ApplicantMobileNumber: 'Enter Applicant Mobile',
-            SubApplicantName: 'Enter SubApplicant Name',
+            SubApplicantName: {
+                    required: "Enter SubApplicant Name",
+                remote: "SubApplicant already exist."
+                },
             SubApplicantAge: 'Enter SubApplicant Age',
             SubApplicantMobileNumber: 'SubApplicant Mobile',
             Relation: 'Select Relation',
@@ -148,7 +165,7 @@
                 { "mData": "SubApplicantName", "sTitle": "Sub Applicant Name", "bSortable": false },
                 { "mData": "SubApplicantAge", "sTitle": "Sub Applicant Age", "bSortable": false },
                 { "mData": "SubApplicantMobileNumber", "sTitle": "Sub Applicant MobileNumber", "bSortable": false },
-                
+
                 { "mData": "Relation", "sTitle": "Relation", "bSortable": false },
                 { "mData": "Str_Action", "sTitle": "Delete", "bSortable": false },
             ]
@@ -157,15 +174,19 @@
         $(".dataTables_info").hide();
     }
     function onDeleteClick(SubApplicantDetails_Id) {
-        $.ajax({
-            url: '/Transaction/DeleteApplicantDetails',
-            data: { SubApplicantDetails_Id: SubApplicantDetails_Id },
-            success: function (aaData) {
-                DisplaySuccessMsg(aaData); 
-            },
-            error: function (xhr, textStatus, errorThrown) {
-            }
-        });
+        var result = confirm("Are You sure Want to delete this SubApplicant?");
+        if (result) {
+            $.ajax({
+                url: '/Transaction/DeleteApplicantDetails',
+                data: { SubApplicantDetails_Id: SubApplicantDetails_Id },
+                success: function (aaData) {
+                    DisplaySuccessMsg(aaData);
+                },
+                error: function (xhr, textStatus, errorThrown) {
+                }
+            });
+        }
+
 
     }
     function DisplaySuccessMsg(aaData) {
@@ -194,13 +215,13 @@
             }, 300);
             if (aaData.flag == "D") {
                 $(".ApplicantArea").prop("readonly", true);
-                $(".SubApplicantArea").val(''); 
+                $(".SubApplicantArea").val('');
             }
             else {
                 $("#Trn_Id").val(aaData.errorID);
                 $(".ApplicantArea").prop("readonly", true);
                 $(".SubApplicantArea").val('');
-                
+
             }
             BINDSUBAPPLICANTDETAILS(1, $("#Trn_Id").val(), "", "");
 

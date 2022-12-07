@@ -111,7 +111,7 @@ span {
 }
 
 .btn-border-org {
-  background: #fff;
+  background: transparent;
   border: 1px solid #e8562a;
   border-radius: 25px;
   padding: 10px 30px;
@@ -370,4 +370,47 @@ span {
 .verification-card .progress{
     margin-bottom: 0px;
     width: 100px;
+}
+
+/* top header applicant details section */
+
+.top-applicant-details{
+  background: #D6E7FF;
+  padding: 15px 20px;
+  border: 1px solid #6AA6F5;
+  border-radius: 6px;
+}
+
+.d-flex{
+  display: flex;
+  align-items: center;
+}
+
+.justify-between{
+  justify-content: space-between;
+}
+
+.user-name{
+  margin-left: 20px;
+}
+
+.user-name h3{
+  margin-top: 5px;
+}
+
+.top-applicant-details .d-flex h2{
+  margin-top: 10px;
+}
+
+.top-applicant-details .d-flex p{
+  margin-bottom: 0px;
+}
+
+.user-details{
+  margin-bottom: 10px;
+}
+
+.user-details p{
+  font-size: 16px;
+  font-weight: 600;
 }

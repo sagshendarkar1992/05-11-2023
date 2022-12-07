@@ -1,119 +1,480 @@
-﻿
+﻿@model ModelPortal.Transaction.TravelDetails
 @{
     ViewBag.Title = "ApplicationForm";
     Layout = null;
 }
-<div class="tab-content-wrapper">
-    <small>Step 2/5</small>
-    <div class="row">
-        <div class="form-group m-3">
-            <div class="col-sm-6">
-                <label>State / City Of Residance</label>
-                <select class="form-control">
-                    <option>Select</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                </select>
+<style>
+    .select2-container {
+        width: 100% !important
+    }
+</style>
+<form action="/Transaction/ApplicationForm" class="form-horizontal" data-ajax="true" data-ajax-success="DisplaySuccessMsg1" enctype="multipart/form-data" id="formApplicationform" method="post" novalidate="novalidate">
+    <div class="tab-content-wrapper">
+        <small>Step 2/5</small>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label>Country</label>
+                    <input value="@Model.Travel_Id" id="Travel_Id" type="hidden" hidden name="Travel_Id" class="form-control" />
+
+                    <input id="Trn_IdTravel" type="hidden" hidden name="Trn_IdTravel" class="form-control" />
+                    <select id="CountryId" name="CountryId" class="form-control"></select>
+                    <input id="CountryName" value="@Model.CountryId" type="hidden" hidden name="CountryName" class="form-control" />
+                </div>
             </div>
-            <div class="col-sm-6">
-                <label>Country Of Travel</label>
-                <select class="form-control">
-                    <option>Select</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                </select>
+        </div>
+        <div class="row">
+            <div class="form-group">
+                <div class="col-sm-6">
+                    <label>State Of Residance</label>
+                    <select id="StateId" name="StateId" class="form-control"></select>
+                    <input id="StateName" value="@Model.StateId" type="hidden" hidden name="StateName" class="form-control" />
+
+                </div>
+                <div class="col-sm-6">
+                    <label>City Of Residance</label>
+                    <select id="CityId" name="CityId" class="form-control"></select>
+                    <input id="CityName" value="@Model.CityId" type="hidden" hidden name="CityName" class="form-control" />
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group m-3">
+                <div class="col-sm-6">
+                    <label>Age</label>
+                    <input type="text" value="@Model.Age" class="form-control" id="Age" name="Age" placeholder="Enter Age" />
+                </div>
+                <div class="col-sm-6">
+                    <label>Occupation</label>
+                    <select id="OccupationId" name="OccupationId" class="form-control"></select>
+                    <input id="Occupation" value="@Model.OccupationId" type="hidden" hidden name="Occupation" class="form-control" />
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group m-3">
+                <div class="col-sm-6">
+                    <label>Purpose Of Travel</label>
+                    <select id="PurposeOfTravelId" name="PurposeOfTravelId" class="form-control"></select>
+                    <input id="Purpose_of_Travel" value="@Model.PurposeOfTravelId" type="hidden" hidden name="Purpose_of_Travel" class="form-control" />
+
+                </div>
+                <div class="col-sm-6">
+                    <label>Entry</label>
+                    <select id="EntryId" name="EntryId" class="form-control"></select>
+                    <input id="EntryName" value="@Model.EntryId" type="hidden" hidden name="EntryName" class="form-control" />
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group m-3">
+                <div class="col-sm-6">
+                    <label>Visa Validity</label>
+                    <select id="VisaValidityId" name="VisaValidityId" class="form-control"></select>
+                    <input id="VisaValidity" value="@Model.VisaValidityId" type="hidden" hidden name="VisaValidity" class="form-control" />
+
+                </div>
+                <div class="col-sm-6">
+                    <label>Procession Time</label>
+                    <input type="time"
+                           class="form-control"
+                           id="ProcessingTime" name="ProcessingTime"
+                           placeholder="Enter Age" value="@Model.ProcessingTime" />
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group m-3">
+                <div class="col-sm-6">
+                    <label>Visa Fees</label>
+                    <input type="text"
+                           class="form-control"
+                           id="VisaFees" name="VisaFees"
+                           placeholder="Enter Visa Fee" value="@Model.VisaFees" />
+                </div>
+                <div class="col-sm-6">
+                    <label>Visa Type</label>
+                    <select id="VisaTypeId" name="VisaTypeId" class="form-control"></select>
+                    <input id="VisaType" value="@Model.VisaTypeId" type="hidden" hidden name="VisaType" class="form-control" />
+
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group" style="margin: 10px 0">
+                <div class="col-sm-12 add-participent">
+                    <button class="btn-border-org" type="submit">
+                        <span class="glyphicon glyphicon-plus"></span> Save Details
+                    </button>
+
+                </div>
             </div>
         </div>
     </div>
-    <div class="row">
-        <div class="form-group m-3">
-            <div class="col-sm-6">
-                <label>Age</label>
-                <input type="type"
-                       class="form-control"
-                       id="inputEmail3"
-                       placeholder="Enter Age" />
-            </div>
-            <div class="col-sm-6">
-                <label>Occupation</label>
-                <select class="form-control">
-                    <option>Select</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group m-3">
-            <div class="col-sm-6">
-                <label>Purpose Of Travel</label>
-                <select class="form-control">
-                    <option>Select</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                </select>
-            </div>
-            <div class="col-sm-6">
-                <label>Entry</label>
-                <select class="form-control">
-                    <option>Select</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group m-3">
-            <div class="col-sm-6">
-                <label>Visa Validity</label>
-                <select class="form-control">
-                    <option>Select</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                </select>
-            </div>
-            <div class="col-sm-6">
-                <label>Procession Time</label>
-                <input type="time"
-                       class="form-control"
-                       id="inputEmail3"
-                       placeholder="Enter Age" />
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="form-group m-3">
-            <div class="col-sm-6">
-                <label>Visa Fees</label>
-                <input type="type"
-                       class="form-control"
-                       id="inputEmail3"
-                       placeholder="Enter Visa Fee" />
-            </div>
-            <div class="col-sm-6">
-                <label>Visa Type</label>
-                <select class="form-control">
-                    <option>Select</option>
-                    <option>option 2</option>
-                    <option>option 3</option>
-                    <option>option 4</option>
-                    <option>option 5</option>
-                </select>
-            </div>
-        </div>
-    </div>
-</div>
+</form>
+
+<script>
+    $("#hideshow").show();
+    $("#Trn_IdTravel").val($("#Trn_Id").val());
+    FillPurposeOfTravel(); FillCountry(); FillOccupation(); FillEntry(); FillVisaType();
+    FillVisaValidity(); FillState(parseInt(@Model.CountryId)); FillCity(parseInt(@Model.StateId));
+    FillEntry();
+    function FillPurposeOfTravel() {
+        $('#PurposeOfTravelId').select2({
+            placeholder: "--Select PurposeOfTravel--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetPurposeOfTravel/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#Purpose_of_Travel').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetPurposeOfTravel/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#Purpose_of_Travel").val($("#PurposeOfTravelId").val());
+        });
+    }
+
+    function FillCountry() {
+        $('#CountryId').select2({
+            placeholder: "--Select Country--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetCountry/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#CountryName').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetCountry/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: ""
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#CountryName").val($("#CountryId").val());
+            FillState($(this).val());
+        });
+    }
+    function FillState(CountryId) {
+
+        $('#StateId').select2({
+            placeholder: "--Select State--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetState/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                        CountryId: CountryId
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#StateName').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetState/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                        CountryId: parseInt(@Model.CountryId)
+                        },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#StateName").val($("#StateId").val());
+            FillCity($(this).val());
+        });
+    }
+    function FillCity(StateId) {
+        $('#CityId').select2({
+            placeholder: "--Select City--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetCity/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                        StateId: StateId
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#CityName').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetCity/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                        StateId: parseInt(@Model.StateId)
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#CityName").val($("#CityId").val());
+        });
+    }
+    function FillOccupation() {
+        $('#OccupationId').select2({
+            placeholder: "--Select Occupation--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetOccupation/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#Occupation').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetOccupation/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#Occupation").val($("#OccupationId").val());
+        });
+    }
+    function FillEntry() {
+        $('#EntryId').select2({
+            placeholder: "--Select Entry--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetEntry/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#EntryName').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetEntry/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#EntryName").val($("#EntryId").val());
+        });
+    }
+    function FillVisaValidity() {
+        $('#VisaValidityId').select2({
+            placeholder: "--Select VisaValidity--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetVisaValidity/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#VisaValidity').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetVisaValidity/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#VisaValidity").val($("#VisaValidityId").val());
+        });
+    }
+    function FillVisaType() {
+        $('#VisaTypeId').select2({
+            placeholder: "--Select VisaType--",
+            allowClear: true,
+            ajax: {
+                dataType: "json",
+                url: "/Help/GetVisaType/",
+                data: function (term) {
+                    return {
+                        Flag: parseInt(0),
+                        BUID: parseInt(0),
+                        DESC: term.term,
+                    };
+                },
+                processResults: function (data) {
+                    return {
+                        results: data
+                    };
+                }
+            }, initSelection: function (element, callback) {
+                var Id = $('#VisaType').val();
+                if (Id == null || Id == "") { Id = parseInt(0); }
+                $.ajax("/Help/GetVisaType/", {
+                    data: {
+                        Flag: parseInt(1),
+                        BUID: Id,
+                        DESC: "",
+                    },
+                    dataType: "json"
+                }).done(function (data) { callback(data); });
+            },
+        }).on("change", function (e) {
+            $("#VisaType").val($("#VisaTypeId").val());
+        });
+    }
+
+    $("#hideshow").hide();
+    function DisplaySuccessMsg1(aaData) {
+        if (parseInt(aaData.errorID) <= 0) {
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.error(aaData.errorMsg, 'Error');
+
+            }, 300);
+        }
+        else {
+            setTimeout(function () {
+                toastr.options = {
+                    closeButton: true,
+                    progressBar: true,
+                    showMethod: 'slideDown',
+                    timeOut: 4000
+                };
+                toastr.success(aaData.errorMsg, 'Success');
+
+            }, 300);
+
+        }
+    }
+    $("#formApplicationform").validate({
+        rules: {
+            StateName: 'required',
+            CountryName: 'required',
+            CityName: 'required',
+            Age: 'required',
+            Occupation: 'required',
+            Purpose_of_Travel: 'required',
+            EntryName: 'required',
+            VisaType: 'required',
+            ProcessionTime: 'required',
+            VisaFees: 'required',
+            VisaValidity: 'required',
+        },
+        messages: {
+            StateName: 'Select State',
+            CountryName: 'Select Country',
+            CityName: 'Select City',
+            Age: 'Enter Age',
+            Occupation: 'Select Occupation',
+            Purpose_of_Travel: 'Select purpose',
+            EntryName: 'Select Entry',
+            VisaType: 'Select Visa Type',
+            ProcessionTime: 'Select Time',
+            VisaFees: 'Enter Visa Fees',
+            VisaValidity: 'Select Visa Validity',
+        },
+        errorPlacement: function (error, element) {
+            debugger
+            var placement = $(element).data('error');
+
+            if (placement) {
+                $(placement).append(error)
+            } else {
+                error.insertBefore(element);
+            }
+        }
+    });
+</script>

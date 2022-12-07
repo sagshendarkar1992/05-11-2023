@@ -1,0 +1,72 @@
+﻿@model ModelPortal.Transaction.InitialLoad
+@{
+    Layout = null;
+    ModelPortal.LoginSessionDetails SessLogObj = new ModelPortal.LoginSessionDetails();
+    SessLogObj = (ModelPortal.LoginSessionDetails)Session["SessionInformation"];
+}
+<div class="row">
+    <div class="col-xs-4" style="border-right: 1px solid #6AA6F5;">
+        <div class="d-flex">
+            <img src="~/Areas/Content/dist/img/profile.png" width="80px" />
+            <div class="user-name">
+                <h3>@SessLogObj.UserName</h3>
+                <p>@SessLogObj.EMAIL_ADDRESS</p>
+            </div>
+        </div>
+        <button style="margin-top: 20px;" class="btn-border-org">
+            Upload Cover Letter
+        </button>
+    </div>
+    <div class="col-xs-6">
+        <div class="row">
+            <div class="col-xs-3 user-details">
+                <small>
+                    Spouse
+                </small>
+                <p>Lorem Ipsum</p>
+            </div>
+            <div class="col-xs-3 user-details">
+                <small>
+                    Child
+                </small>
+                <p>Lorem Ipsum</p>
+            </div>
+            <div class="col-xs-3 user-details">
+                <small>
+                    Travelling To
+                </small>
+                <p>@Model.TravellingToName</p>
+            </div>
+            <div class="col-xs-3 user-details">
+                <small>
+                    Purpose of Travel
+                </small>
+                <p>@Model.PurposeOfTravel</p>
+            </div>
+            <div class="col-xs-3 user-details">
+                <small>
+                    Mother
+                </small>
+                <p>Lorem Ipsum</p>
+            </div>
+            <div class="col-xs-3 user-details">
+                <small>
+                    Father
+                </small>
+                <p>Lorem Ipsum</p>
+            </div>
+            <div class="col-xs-3 user-details">
+                <small>
+                    Number Of Travellers
+                </small>
+                <p>@Model.NumberOfDays</p>
+            </div>
+            <div class="col-xs-3 user-details">
+                <small>
+                    Visa Type
+                </small>
+                <p>Lorem Ipsum</p>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using Vzah.Models;
 
 namespace Vzah
 {
@@ -7,6 +8,7 @@ namespace Vzah
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            filters.Add(new SessionExpireAttribute());
             filters.Add(new HandleErrorAttribute());
         }
     }
